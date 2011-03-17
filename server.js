@@ -8,7 +8,7 @@ require(__dirname + "/lib/setup").ext( __dirname + "/lib").ext( __dirname + "/li
 var connect = require('connect')
 , express = require('express')
 , sys = require('sys')
-, port = 8081;
+, port = 8080;
 
 //Setup Express
 var server = express.createServer(    express.logger(),
@@ -76,9 +76,9 @@ server.listen( port);
 server.get('/', function(req,res){
     res.render('index.ejs', {
         locals : { 
-            header: '#Header#',
-            footer: '#Footer#',
-            title : 'RESTTEST',
+            header: 'RestTest',
+            footer: 'Developed by the ELSTR team',
+            title : 'RestTest',
             app_version : settings.app_version,
             app_name : 'index',
             description: 'Page Description',
@@ -88,6 +88,20 @@ server.get('/', function(req,res){
     });
 });
 
+//Authenticate
+server.get('/auth', function(req, res){
+    throw new Error('Not Implemented');
+});
+
+//Load Project Data
+server.get('/load', function(req, res){
+    throw new Error('Not Implemented');
+});
+
+//Save Project Data
+server.get('/save', function(req, res){
+    throw new Error('Not Implemented');
+});
 
 //A Route for Creating a 500 Error (Useful to keep around)
 server.get('/500', function(req, res){
