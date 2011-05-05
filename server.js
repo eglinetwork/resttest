@@ -1,122 +1,28 @@
-//Global site settings
-var settings = {
-    app_version : 'dev'
-};
+/* 
+ * This is the RestTest Server
+ *
+ * For now, I just send a simple HTML file back, since most of the code will be clientside.
+ * 
+ */
 
-//setup Dependencies
-require(__dirname + "/lib/setup").ext( __dirname + "/lib").ext( __dirname + "/lib/express/support");
-var connect = require('connect')
-, express = require('express')
-, sys = require('sys')
-, port = 8080;
 
-//Setup Express
-var server = express.createServer(    express.logger(),
+var express = require('express'),
+    app = express.createServer();
 
-    // Required by session() middleware
-    express.cookieDecoder(),
-
-    // Populates:
-    // - req.session
-    // - req.sessionStore
-    // - req.sessionID
-    express.session()
-    );
-    
-    
-server.configure(function(){
-    server.set('views', __dirname + '/views');
-    server.use(connect.bodyDecoder());
-    server.use(connect.staticProvider(__dirname + '/static'));
-    server.use(server.router);
+app.get('/', function(req, res){
+    //res.send(req.url)
+    res.sendfile('static/index.html');
 });
 
-//setup the errors
-server.error(function(err, req, res, next){
-    if (err instanceof NotFound) {
-        res.render('404.ejs', {
-            locals: { 
-                header: '#Header#',
-                footer: '#Footer#',
-                title : '404 - Not Found',
-                app_version : settings.app_version ,
-                app_name : 'error' ,
-                description: '',
-                author: '',
-                analyticssiteid: 'XXXXXXX' 
-            },
-            status: 404
-        });
-    } else {
-        res.render('500.ejs', {
-            locals: { 
-                header: '#Header#',
-                footer: '#Footer#',
-                title : 'The Server Encountered an Error',
-                app_version : settings.app_version ,
-                app_name : 'error' ,
-                description: '',
-                author: '',
-                analyticssiteid: 'XXXXXXX',
-                error: err 
-            },
-            status: 500
-        });
-    }
-});
-server.listen( port);
-
-
-///////////////////////////////////////////
-//              Routes                   //
-///////////////////////////////////////////
-
-/////// ADD ALL YOUR ROUTES HERE  /////////
-
-server.get('/', function(req,res){
-    res.render('index.ejs', {
-        locals : { 
-            header: 'RestTest',
-            footer: 'Developed by the ELSTR team',
-            title : 'RestTest',
-            app_version : settings.app_version,
-            app_name : 'index',
-            description: 'Page Description',
-            author: 'Your Name',
-            analyticssiteid: 'XXXXXXX' 
-        }
-    });
+app.get('/js/*', function(req, res){
+    res.sendfile('static/js/'+req.params[0]);
 });
 
-//Authenticate
-server.get('/auth', function(req, res){
-    throw new Error('Not Implemented');
+
+app.get('/css/*', function(req, res){
+    //console.log(req)
+    res.sendfile('static/css/'+req.params[0]);
 });
 
-//Load Project Data
-server.get('/load', function(req, res){
-    throw new Error('Not Implemented');
-});
-
-//Save Project Data
-server.get('/save', function(req, res){
-    throw new Error('Not Implemented');
-});
-
-//A Route for Creating a 500 Error (Useful to keep around)
-server.get('/500', function(req, res){
-    throw new Error('This is a 500 Error');
-});
-
-//The 404 Route (ALWAYS Keep this as the last route)
-server.get('/*', function(req, res){
-    throw new NotFound;
-});
-
-function NotFound(msg){
-    this.name = 'NotFound';
-    Error.call(this, msg);
-    Error.captureStackTrace(this, arguments.callee);
-}
-
-console.log('Listening on http://127.0.0.1:' + port );
+app.listen('8080');
+console.log('Express server started on port %s', app.address().port);

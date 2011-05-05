@@ -1,0 +1,104 @@
+<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+        <title></title>
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="shortcut icon" href="/favicon.ico">
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+        <script src="js/libs/modernizr-1.7.min.js"></script>
+    </head>
+    <body>
+        <div id="container">
+            <header id="topheader">
+                <nav id="topnav">Change Project | About | ELSTR</nav>
+                <h1>RestTest</h1>
+                <p>a tool to write proper specs and prove they work</p>
+                <nav id="projectnav" class="subnavright">
+                    <ul>
+                        <li>Project Description</li>
+                        <li>Specification</li>
+                        <li>Fulltest</li>
+                    </ul>
+                </nav>
+            </header>
+
+            <div id="main" role="main">
+                <section>
+                    <h2>General Specification</h2>
+                    <nav id="generalnav"  class="subnavright">
+                        <ul>
+                            <li>New Version</li>
+                            <li>History</li>
+                        </ul>
+                    </nav>
+                    Server URL
+                    <input type="text" />
+                </section>
+                <section>
+                    <header>
+                        <h2>Service name</h2>
+                        <nav id="servicenav"  class="subnavright">
+                            <ul>
+                                <li>Edit</li>
+                                <li>Save</li>
+                                <li>Minimize</li>
+                            </ul>
+                        </nav>
+                        <label>Description:</label><br>
+                        <textarea class="servicedescription">Write a short description the service here... </textarea>
+                    </header>
+                    <section class="request">
+                        <header><h2>Request</h2></header>
+                        <p><label>Method</label>
+                            <select><option>GET</option><option>POST</option></select>
+                            <button class="request">Request</button></p>
+                        <p><label>Service URL</label><input type="text" class="serviceurl"></p>
+                        <div id="requesttab"></div>
+                    </section>
+                    <section class="response">
+                        <header><h2>Response</h2></header>
+                        <div id="responsetab"></div>
+                    </section>
+                </section>
+                <section>
+                    <header>
+                        <h2>Second Service</h2>
+                    </header>
+                    <section class="request">
+                        <header>Request</header>
+                    </section>
+                    <section class="answer">
+                        <header>Answer</header>
+                    </section>
+                </section>
+                <button>Add new Service</button>
+            </div>
+
+            <footer>
+                Cerated by Intelliact AG
+            </footer>
+        </div>
+
+        <script src="//yui.yahooapis.com/3.3.0/build/yui/yui-min.js"></script>
+        <script src="/js/index.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="//yui.yahooapis.com/combo?3.3.0/build/cssfonts/fonts-min.css&3.3.0/build/cssreset/reset-min.css&3.3.0/build/cssgrids/grids-min.css&3.3.0/build/cssbase/base-min.css">
+    <link rel="stylesheet" href="css/style.css?v=2">
+    <!--[if lt IE 7 ]>
+	<script src="js/libs/dd_belatedpng.js"></script>
+	<script> DD_belatedPNG.fix('img, .png_bg');</script>
+	<![endif]-->
+</body>
+</html>
