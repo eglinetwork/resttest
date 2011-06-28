@@ -7,30 +7,32 @@ YUI({
     modules: {
         'rt_service': {
             fullpath: '/js/rt_service.js',
-            requires : ['base', 'widget']
+            requires : ['base', 'widget', 'io-xdr']
+        },
+        'rt_project': {
+            fullpath: '/js/rt_project.js',
+            requires : ['base', 'rt_service']
         },
         'rt_datamanager': {
             fullpath: '/js/rt_datamanager.js',
             requires : ['base', 'io']
         }
     }
-}).use('base','node','rt_service', 'rt_datamanager', function(Y) {
+}).use('base','node','rt_service', 'rt_project', 'rt_datamanager', function(Y) {
     function main() {
         Y.one('.yui3-js-enabled').removeClass('yui3-js-enabled');
         Y.log('it is ready');
 
         // Load the services and create instances of rt_service
-        var dataManager = new Y.RT.DataManager();       
-        var data =  dataManager.loadProject('0001');
+        var dataManager = new Y.RT.DataManager();        
+
+        var currentProject = new Y.RT.Project({
+            srcNode: '#project',
+            dataManager: dataManager,
+            id : '0001'
+        });
+        currentProject.render();
         
-
-            Y.Array.each (data.services, function(service) {
-                var myService = new Y.RT.Service();
-                myService.render('#services');
-                myService.set('name', service.name);
-                myService.set('description', service.description);
-            })
-
     }
     Y.on("domready", main);
 });

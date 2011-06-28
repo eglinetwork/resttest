@@ -127,7 +127,7 @@ h2 {
     margin-bottom:  0.5em;
 }
 
-#main section {
+#project section {
     margin-bottom: 10px;
     margin-top: 10px;
     border-radius: 10px;
@@ -136,7 +136,7 @@ h2 {
     overflow:hidden;
 }
 
-#main section header {
+#project section header {
     background: none;
 }
 
@@ -144,18 +144,18 @@ h2 {
     width: 950px;
 }
 
-#main section section {
+#project section section {
     background-color: #cccccc;
     width:450px;
     float: left;
     margin-right: 10px;
 }
 
-#main section section header {
+#project section section header {
     background: none;
 }
 
-#main section section label {
+#project section section label {
     display: block;
     float: left;
     width:80px;
@@ -163,21 +163,21 @@ h2 {
     position: relative;
 }
 
-#main section section .serviceurl {
+#project section section .serviceurl {
     width: 350px;
 }
 
-#main section section .request button {
+#project section section .request button {
     float:right;
 }
 
 
-#main section section .postcontent {
+#project section section .postcontent {
     width: 430px;
     height: 200px;
 }
 
-#main section section .responsecontent {
+#project section section .responsecontent {
     width: 430px;
     height: 200px;
 }

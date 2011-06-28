@@ -22,20 +22,26 @@ YUI.add('rt_datamanager', function (Y) {
          * Load date from
          */
         loadProject: function (pid) {
-            this.set('data',
-            {
+            var data = {
+                name : 'A big Project',
+                description : 'The description of the project',
+                serverURL : 'http://resttest.elstr.com',
                 services : [{
                     name : 'First Service',
-                    description  : 'Just a short decription'
+                    description  : 'Just a short decription ... and more',
+                    url : 'http://pipes.yahooapis.com/pipes/pipe.run?_id=giWz8Vc33BG6rQEQo_NLYQ&_render=json',
+                    method : 'GET'
                 },
                 {
                     name : 'Second Service',
-                    description  : 'Another decription'
+                    description  : 'Another decription',
+                    url : 'http://pipes.yahooapis.com/pipes/pipe.run?_id=giWz8Vc33BG6rQEQo_NLYQ&_render=json',
+                    method : 'POST'
                 }
                 ]
-            });
+            }
 
-            return this.get('data');
+            return data;
         }
         
     }, {
