@@ -1,11 +1,12 @@
 YUI.add('rt_service', function (Y) {
 
     Y.namespace('RT').Service = Y.Base.create('service', Y.Widget, [],  {
-        DISPLAY_TEMPLATE : '<section><header><h2 id="name">Service name</h2> \
-                            <nav id="servicenav"  class="subnavright"><ul><li>Edit</li><li>Save</li><li>Minimize</li></ul></nav> \
+        DISPLAY_TEMPLATE : '<section><header><h2 id="name">Service name <input type="text" id="servicename"></h2> \
+                            <nav id="servicenav"  class="subnavright"><ul><li>Edit</li><li>Minimize</li></ul></nav> \
                             <label>Description:</label><br><textarea class="servicedescription" id="description">Write a short description the service here... </textarea> \
 </header><section class="request"><header><h2>Request</h2></header><p><label>Method</label><select id="method"><option>GET</option><option>POST</option></select> \
-<button id="request" class="request">Request</button></p><p><label>Service URL</label><input type="text" id="url" class="serviceurl"></p><div id="requesttab"></div></section><section class="response"><header><h2>Response</h2></header><div id="responsetab"><div id="plainResponse">Response</div></div></section></section>',
+<button id="request" class="request">Request</button></p><p><label>Service URL</label><input type="text" id="url" class="serviceurl"></p><div id="requesttab"></div></section><section class="response"><header> \ \n\
+<h2>Response</h2></header><div id="responsetab"><div id="plainResponse" class= "responsecontent">Response</div></div></section></section>',
         initializer: function () {
 
         },
@@ -65,8 +66,17 @@ YUI.add('rt_service', function (Y) {
             this._updateMethodUI(this.get('method'));
         },
 
+        getDataObject: function() {
+            var data = {};
+            data.name = this.get('name');
+            data.description = this.get('description');
+            data.url = this.get('url');
+            data.method = this.get('method');
+            return data;
+        },
+
         _updateNameUI: function (value) {
-            this._display.one('#name').setContent(value);
+            this._display.one('#servicename').set('value', value);
         },
 
         _updateDescriptionUI: function (value) {

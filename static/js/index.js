@@ -15,7 +15,7 @@ YUI({
         },
         'rt_datamanager': {
             fullpath: '/js/rt_datamanager.js',
-            requires : ['base', 'io']
+            requires : ['base', 'io', 'gallery-storage-lite']
         }
     }
 }).use('base','node','rt_service', 'rt_project', 'rt_datamanager', function(Y) {
@@ -26,6 +26,8 @@ YUI({
         // Load the services and create instances of rt_service
         var dataManager = new Y.RT.DataManager();        
 
+        //dataManager.saveSomeData('0001');
+        
         var currentProject = new Y.RT.Project({
             srcNode: '#project',
             dataManager: dataManager,

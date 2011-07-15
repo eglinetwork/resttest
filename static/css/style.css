@@ -179,7 +179,8 @@ h2 {
 
 #project section section .responsecontent {
     width: 430px;
-    height: 200px;
+    height: 250px;
+    overflow: scroll;
 }
 
 #topnav {

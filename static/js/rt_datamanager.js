@@ -22,7 +22,16 @@ YUI.add('rt_datamanager', function (Y) {
          * Load date from
          */
         loadProject: function (pid) {
-            var data = {
+            var data = Y.StorageLite.getItem(pid, true);
+            return data;
+        },
+
+        saveProject: function (pid, data) {
+            Y.StorageLite.setItem(pid, data, true);
+        },
+
+        saveSomeData: function (pid) {
+             var data = {
                 name : 'A big Project',
                 description : 'The description of the project',
                 serverURL : 'http://resttest.elstr.com',
@@ -41,7 +50,7 @@ YUI.add('rt_datamanager', function (Y) {
                 ]
             }
 
-            return data;
+            Y.StorageLite.setItem( pid, data, true);
         }
         
     }, {
