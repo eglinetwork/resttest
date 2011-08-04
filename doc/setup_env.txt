@@ -1,0 +1,9 @@
+To use RestTest with your server, there are two concepts to setip
+
+1.) Flash and crossdomain.xml
+
+Add a crossdomain.xml to the root of the service provider which allows access from resttest.
+An example can be found in this directory.
+
+2.) Upload a seedfile to the server
+

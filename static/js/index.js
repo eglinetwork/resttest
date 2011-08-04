@@ -18,7 +18,7 @@ YUI({
             requires : ['base', 'io', 'gallery-storage-lite']
         }
     }
-}).use('base','node','rt_service', 'rt_project', 'rt_datamanager', function(Y) {
+}).use('base','node','json','tabview', 'rt_service', 'rt_project', 'rt_datamanager', function(Y) {
     function main() {
         Y.one('.yui3-js-enabled').removeClass('yui3-js-enabled');
         Y.log('it is ready');
@@ -26,7 +26,8 @@ YUI({
         // Load the services and create instances of rt_service
         var dataManager = new Y.RT.DataManager();        
 
-        //dataManager.saveSomeData('0001');
+        // While early development use this method to add some dummy data to the env
+        // dataManager.saveSomeData('0001');
         
         var currentProject = new Y.RT.Project({
             srcNode: '#project',

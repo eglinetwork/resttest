@@ -1,26 +1,75 @@
-YUI.add('rt_service', function (Y) {
+YUI.add('rt_service', function(Y) {
 
-    Y.namespace('RT').Service = Y.Base.create('service', Y.Widget, [],  {
-        DISPLAY_TEMPLATE : '<section><header><h2 id="name">Service name <input type="text" id="servicename"></h2> \
-                            <nav id="servicenav"  class="subnavright"><ul><li>Edit</li><li>Minimize</li></ul></nav> \
-                            <label>Description:</label><br><textarea class="servicedescription" id="description">Write a short description the service here... </textarea> \
-</header><section class="request"><header><h2>Request</h2></header><p><label>Method</label><select id="method"><option>GET</option><option>POST</option></select> \
-<button id="request" class="request">Request</button></p><p><label>Service URL</label><input type="text" id="url" class="serviceurl"></p><div id="requesttab"></div></section><section class="response"><header> \ \n\
-<h2>Response</h2></header><div id="responsetab"><div id="plainResponse" class= "responsecontent">Response</div></div></section></section>',
-        initializer: function () {
+    Y.namespace('RT').Service = Y.Base.create('service', Y.Widget, [], {
+        DISPLAY_TEMPLATE: '<section> \
+                            <header> \
+                                <h2 id="name">Service name <input type="text" id="servicename"></h2> \
+                                <nav id="servicenav"  class="subnavright"><ul><li>Edit</li><li>Minimize</li></ul></nav> \
+                                <label>Description:</label><br> \
+                                <textarea class="servicedescription" id="description">Write a short description the service here... </textarea> \
+                            </header> \
+                            <section class="request"> \
+                                <header><h2>Request</h2></header> \
+                                <div id="requesttab"> \
+                                </div> \
+                            </section> \
+                            <section class="response"> \
+                                <header><h2>Response</h2></header> \
+                                <div id="responsetab"> \
+                                </div> \
+                            </section> \
+                            </section>',
+                            
+        REQUEST_TEMPLATE_SPEC: '<p><label>Method</label><select id="method"><option>GET</option><option>POST</option></select> \
+                                    <button id="request" class="request">Request</button></p> \
+                                <p><label>Service URL</label><input type="text" id="url" class="serviceurl"></p> \
+                                <div id="content"> \
+                                    <textarea class="postcontent" id="postcontent"></textarea> \
+                                </div>',
+        
+        REQUEST_TEMPLATE_TESTCASES: '',
+
+        RESPONSE_TEMPLATE_PLAIN: '<pre><code id="plainResponse" class= "responsecontent"></code></pre>',
+
+        initializer: function() {
 
         },
 
-        destructor: function () {
+        destructor: function() {
 
         },
 
-        renderUI: function () {
+        renderUI: function() {
             var content = this.get('contentBox');
             //var node = Y.Node.create(Y.Lang.sub(this.DISPLAY_TEMPLATE, this.getClassName('display')));
             var node = Y.Node.create(this.DISPLAY_TEMPLATE);
             content.append(node);
             this._display = node;
+
+            this.tabviewRequest = new Y.TabView({
+                srcNode: '#requesttab',
+                children: [{
+                    label: 'Requestspecification',
+                    content: this.REQUEST_TEMPLATE_SPEC
+                }, {
+                    label: 'Testcases',
+                    content: this.REQUEST_TEMPLATE_TESTCASES
+                }]
+            }, this);
+
+           this.tabviewResponse = new Y.TabView({
+                srcNode: '#responsetab',
+                children: [{
+                    label: 'Response (plain text)',
+                    content: this.RESPONSE_TEMPLATE_PLAIN
+                }, {
+                    label: 'Testprotocoll',
+                    content: '<textarea class="responsecontent"></textarea>'
+                }]
+            }, this);
+
+            this.tabviewRequest.render();
+            this.tabviewResponse.render();
         },
 
         bindUI: function() {
@@ -56,6 +105,14 @@ YUI.add('rt_service', function (Y) {
                 this.set('method', e.target.get('value'));
             }, this);
 
+            //Content
+            this.after('postcontentChange', function(e) {
+                this._updateMethodUI(e.newVal);
+            }, this);
+            this._display.one('#postcontent').after('change', function(e) {
+                this.set('postcontent', e.target.get('value'));
+            }, this);
+
             this._display.one('#request').on('click', this._doRequest, this);
         },
 
@@ -64,6 +121,7 @@ YUI.add('rt_service', function (Y) {
             this._updateDescriptionUI(this.get('description'));
             this._updateUrlUI(this.get('url'));
             this._updateMethodUI(this.get('method'));
+            this._updatePostcontentUI(this.get('postcontent'));
         },
 
         getDataObject: function() {
@@ -72,42 +130,48 @@ YUI.add('rt_service', function (Y) {
             data.description = this.get('description');
             data.url = this.get('url');
             data.method = this.get('method');
+            data.postcontent = this.get('postcontent');
             return data;
         },
 
-        _updateNameUI: function (value) {
+        _updateNameUI: function(value) {
             this._display.one('#servicename').set('value', value);
         },
 
-        _updateDescriptionUI: function (value) {
+        _updateDescriptionUI: function(value) {
             this._display.one('#description').set('value', value);
         },
 
-        _updateUrlUI: function (value) {
+        _updateUrlUI: function(value) {
             this._display.one('#url').set('value', value);
         },
 
-        _updateMethodUI: function (value) {
+        _updateMethodUI: function(value) {
             this._display.one('#method').set('value', value);
         },
-        
-        _doRequest: function () {
+
+        _updatePostcontentUI: function(value) {
+            this._display.one('#postcontent').set('value', value);
+        },
+
+        _doRequest: function() {
             var xdrConfig = {
-                id:'flash',
-                src:'js/io.swf'
-            }
+                id: 'flash',
+                src: 'js/io.swf'
+            };
             Y.io.transport(xdrConfig);
 
             var cfg = {
                 method: this.get('method'),
+                data: this.get('postcontent'),
                 xdr: {
-                    use:'flash' //This is the xdrConfig id we referenced above.
+                    use: 'flash' //This is the xdrConfig id we referenced above.
                 },
-                
+
                 on: {
                     //Our event handlers previously defined:
                     start: function(id, args) {
-                        Y.log('START')
+                        Y.log('START');
                     },
                     success: function(id, o, args) {
                         Y.log('SUCCESS');
@@ -127,24 +191,28 @@ YUI.add('rt_service', function (Y) {
 
     }, {
         ATTRS: {
-            name : {
+            name: {
                 value: "",
                 validator: Y.Lang.isString
             },
-            description : {
+            description: {
                 value: "",
                 validator: Y.Lang.isString
             },
-            url : {
+            url: {
                 value: ""
             },
-            method : {
+            method: {
+                value: "",
+                validator: Y.Lang.isString
+            },
+            postcontent: {
                 value: "",
                 validator: Y.Lang.isString
             }
         }
-    })
-    
+    });
+
 }, '0.1', {
-    requires : ['base', 'widget', 'io-xdr']
+    requires: ['base', 'widget', 'io-xdr']
 });

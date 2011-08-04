@@ -171,8 +171,8 @@ h2 {
     float:right;
 }
 
-
 #project section section .postcontent {
+    margin-top: 10px;
     width: 430px;
     height: 200px;
 }
@@ -181,6 +181,8 @@ h2 {
     width: 430px;
     height: 250px;
     overflow: scroll;
+    padding: 5px;
+    background-color: #ffffff;
 }
 
 #topnav {
