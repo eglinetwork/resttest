@@ -5,9 +5,13 @@
 
 YUI({
     modules: {
+        'rt_keyvalueeditor': {
+            fullpath: '/js/rt_keyvalueeditor.js',
+            requires : ['base', 'widget']
+        },
         'rt_service': {
             fullpath: '/js/rt_service.js',
-            requires : ['base', 'widget', 'io-xdr']
+            requires : ['base', 'widget', 'io-xdr', 'tabview', 'rt_keyvalueeditor']
         },
         'rt_project': {
             fullpath: '/js/rt_project.js',
@@ -18,7 +22,7 @@ YUI({
             requires : ['base', 'io', 'gallery-storage-lite']
         }
     }
-}).use('base','node','json','tabview', 'rt_service', 'rt_project', 'rt_datamanager', function(Y) {
+}).use('base','node','json', 'rt_service', 'rt_project', 'rt_datamanager', function(Y) {
     function main() {
         Y.one('.yui3-js-enabled').removeClass('yui3-js-enabled');
         Y.log('it is ready');
@@ -27,7 +31,7 @@ YUI({
         var dataManager = new Y.RT.DataManager();        
 
         // While early development use this method to add some dummy data to the env
-        // dataManager.saveSomeData('0001');
+        //dataManager.saveSomeData('0001');
         
         var currentProject = new Y.RT.Project({
             srcNode: '#project',
@@ -39,45 +43,3 @@ YUI({
     }
     Y.on("domready", main);
 });
-
-
-
-
-
-
-
-
-/*YUI().use('node', 'tabview', 'io', 'gallery-storage-lite', function(Y) {
-    Y.namespace('RT');
-
-    Y.RT.data = {}
-    
-    Y.RT.tabviewRequest = new Y.TabView({
-        srcNode: '#requesttab',
-        children: [{
-            label: 'Content',
-            content: '<textarea class="postcontent"></textarea>'
-        }, {
-            label: 'Headers',
-            content: '<textarea class="postcontent"></textarea>'
-        }, {
-            label: 'Paramter',
-            content: '<textarea class="postcontent"></textarea>'
-        }]
-    });
-
-    Y.RT.tabviewResponse = new Y.TabView({
-        srcNode: '#responsetab',
-        children: [{
-            label: 'Plaintext',
-            content: '<textarea class="responsecontent"></textarea>'
-        }, {
-            label: 'Testcases',
-            content: '<textarea class="responsecontent"></textarea>'
-        }]
-    });
-
-    Y.RT.tabviewRequest.render();
-    Y.RT.tabviewResponse.render();
-});*/
-

@@ -87,7 +87,7 @@ a:hover { color: #036; }
 */
 
 /* Colorscheme:
-* Pink Shades: B70094	892276	770060	DB37BC	DB62C4
+* Pink Shades: B70094    892276	770060	DB37BC	DB62C4
 * Green Shades: BDF400	98B72E	7B9E00	CFF93E	DBF970
 */
 #container {
@@ -151,8 +151,26 @@ h2 {
     margin-right: 10px;
 }
 
-#project section section header {
-    background: none;
+#project section section .yui3-tab {
+    background: none repeat scroll 0 0 #eeeeee;
+    border-radius: 5px;
+    margin: 0 5px 10px 0;
+    box-shadow: inset 0 0 1px #111111;
+    
+}
+
+#project section section .yui3-tab-selected {
+    background: none repeat scroll 0 0 #ffffff;
+    box-shadow: inset 1px 1px 2px #111111;
+
+}
+
+#project section section .tabcontent {
+    border-radius: 5px;
+    padding:5px;
+    background: none repeat scroll 0 0 #eeeeee;
+    box-shadow: inset 1px 1px 2px #111111;
+    
 }
 
 #project section section label {
@@ -177,13 +195,11 @@ h2 {
     height: 200px;
 }
 
-#project section section .responsecontent {
-    width: 430px;
-    height: 250px;
-    overflow: scroll;
-    padding: 5px;
-    background-color: #ffffff;
+
+#project section section .request button {
+    float:right;
 }
+
 
 #topnav {
    float: right;

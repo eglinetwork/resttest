@@ -9,27 +9,29 @@ YUI.add('rt_service', function(Y) {
                                 <textarea class="servicedescription" id="description">Write a short description the service here... </textarea> \
                             </header> \
                             <section class="request"> \
-                                <header><h2>Request</h2></header> \
                                 <div id="requesttab"> \
                                 </div> \
                             </section> \
                             <section class="response"> \
-                                <header><h2>Response</h2></header> \
                                 <div id="responsetab"> \
                                 </div> \
                             </section> \
                             </section>',
-                            
-        REQUEST_TEMPLATE_SPEC: '<p><label>Method</label><select id="method"><option>GET</option><option>POST</option></select> \
-                                    <button id="request" class="request">Request</button></p> \
+
+        REQUEST_TEMPLATE_SPEC: '<div class="tabcontent"><p><label>Method</label><select id="method"><option>GET</option><option>POST</option></select> \
+                                    </p> \
                                 <p><label>Service URL</label><input type="text" id="url" class="serviceurl"></p> \
                                 <div id="content"> \
                                     <textarea class="postcontent" id="postcontent"></textarea> \
-                                </div>',
-        
-        REQUEST_TEMPLATE_TESTCASES: '',
+                                </div></div>',
 
-        RESPONSE_TEMPLATE_PLAIN: '<pre><code id="plainResponse" class= "responsecontent"></code></pre>',
+        REQUEST_TEMPLATE_TESTCASES: '<div class="tabcontent"><p><button id="request" class="request">Request</button></p> \
+                                     <p><h2>Request parameters for this test</h2></p> \
+                                     <div id="testparameters"></div> \
+                                     <p><h2>Testunits</h2></p> \
+                                     <div id="testunits"></div></div>',
+
+        RESPONSE_TEMPLATE_PLAIN: '<div class="tabcontent"><pre><code id="plainResponse" class= "responsecontent"></code></pre></div>',
 
         initializer: function() {
 
@@ -47,29 +49,39 @@ YUI.add('rt_service', function(Y) {
             this._display = node;
 
             this.tabviewRequest = new Y.TabView({
-                srcNode: '#requesttab',
+                srcNode: this._display.one('#requesttab'),
                 children: [{
-                    label: 'Requestspecification',
+                    label: 'Request specification',
                     content: this.REQUEST_TEMPLATE_SPEC
                 }, {
                     label: 'Testcases',
                     content: this.REQUEST_TEMPLATE_TESTCASES
                 }]
-            }, this);
+            });
+            this.tabviewRequest.render();
+            this.testParameters = new Y.RT.KeyValueEditor({
+                addButtonText : '+',
+                keyText : 'Parameter',
+                valueText : 'Testvalue',
+                pairs :[]    
+            });
+            this.testParameters.render(this._display.one('#testparameters'));
 
-           this.tabviewResponse = new Y.TabView({
-                srcNode: '#responsetab',
+            this.tabviewResponse = new Y.TabView({
+                srcNode: this._display.one('#responsetab'),
                 children: [{
                     label: 'Response (plain text)',
                     content: this.RESPONSE_TEMPLATE_PLAIN
                 }, {
-                    label: 'Testprotocoll',
+                    label: 'Testprotocol',
                     content: '<textarea class="responsecontent"></textarea>'
                 }]
-            }, this);
+            });
 
-            this.tabviewRequest.render();
+            
             this.tabviewResponse.render();
+            
+            
         },
 
         bindUI: function() {
@@ -112,6 +124,14 @@ YUI.add('rt_service', function(Y) {
             this._display.one('#postcontent').after('change', function(e) {
                 this.set('postcontent', e.target.get('value'));
             }, this);
+            
+            //Testcases
+            this.after('testcasesChange', function(e) {
+                this._updateTestcasesUI(e.newVal);
+            }, this);
+            this.testParameters.after('change', function(e) {
+                //this.set('testcases', this.testParameters.get(''));
+            }, this);
 
             this._display.one('#request').on('click', this._doRequest, this);
         },
@@ -122,6 +142,7 @@ YUI.add('rt_service', function(Y) {
             this._updateUrlUI(this.get('url'));
             this._updateMethodUI(this.get('method'));
             this._updatePostcontentUI(this.get('postcontent'));
+            this._updateTestcasesUI(this.get('testcases'));
         },
 
         getDataObject: function() {
@@ -131,6 +152,10 @@ YUI.add('rt_service', function(Y) {
             data.url = this.get('url');
             data.method = this.get('method');
             data.postcontent = this.get('postcontent');
+            data.testcases = [{
+                parameters : this.testParameters.get('pairs'),
+                testunits  : []                
+            }];
             return data;
         },
 
@@ -152,6 +177,13 @@ YUI.add('rt_service', function(Y) {
 
         _updatePostcontentUI: function(value) {
             this._display.one('#postcontent').set('value', value);
+        },  
+
+        _updateTestcasesUI: function(value) {
+            this.currentcase = value[0];
+            if (!Y.Lang.isUndefined(this.currentcase)) {
+                this.testParameters.set('pairs', this.currentcase.parameters);
+            }
         },
 
         _doRequest: function() {
@@ -160,10 +192,15 @@ YUI.add('rt_service', function(Y) {
                 src: 'js/io.swf'
             };
             Y.io.transport(xdrConfig);
-
+            var reqdata = this.get('postcontent');
+            // replace variables with values
+            Y.each(this.currentcase.parameters, function(param) {
+                reqdata = reqdata.replace(param.key, param.value);
+            });
+            
             var cfg = {
                 method: this.get('method'),
-                data: this.get('postcontent'),
+                data: reqdata,
                 xdr: {
                     use: 'flash' //This is the xdrConfig id we referenced above.
                 },
@@ -186,7 +223,7 @@ YUI.add('rt_service', function(Y) {
                 }
             };
             var context = this;
-            var obj = Y.io(this.get('url'), cfg);
+            var obj = Y.io(this.get('baseURL')+this.get('url'), cfg);
         }
 
     }, {
@@ -209,10 +246,18 @@ YUI.add('rt_service', function(Y) {
             postcontent: {
                 value: "",
                 validator: Y.Lang.isString
+            },
+            testcases: {
+                value: [],
+                validator: Y.Lang.isArray
+            },
+            baseURL: {
+                value: "",
+                validator: Y.Lang.isString
             }
         }
     });
 
 }, '0.1', {
-    requires: ['base', 'widget', 'io-xdr']
+    requires: ['base', 'widget', 'io-xdr', 'tabview', 'rt_keyvalueeditor']
 });
