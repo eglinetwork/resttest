@@ -194,11 +194,13 @@ h2 {
     margin-top: 10px;
     width: 430px;
     height: 200px;
+    font-family: monospace,sans-serif;
 }
 
 #project section section .testCaseCode {
     width: 430px;
     height: 200px;
+    font-family: monospace,sans-serif;
 }
 
 

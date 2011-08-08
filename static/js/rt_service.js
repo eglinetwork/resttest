@@ -25,11 +25,14 @@
                                 <textarea class="postcontent" id="postcontent"></textarea> \
                                 </div></div>',
 
-        REQUEST_TEMPLATE_TESTCASES: '<div class="tabcontent"><p><button id="request" class="request">Request</button></p> \
-                                        <p><h2>Request parameters for this test</h2></p> \
-                                        <div id="testparameters"></div> \
-                                        <p><h2>Test Code (currently only Y.Test supported)</h2></p> \
-                                         <code><textarea id="testCaseCode" class="testCaseCode">{}</textarea></code></div>',
+        REQUEST_TEMPLATE_TESTCASES: '<div class="tabcontent"><p> \
+                                     <select><option>Example</option></select> \
+                                     <button id="addTestCase" class="request">Add</button> \
+                                     <button id="request" class="request">Request</button></p> \
+                                     <p><h2>Request parameters for this test</h2></p> \
+                                     <div id="testparameters"></div> \
+                                     <p><h2>Test Code (currently only Y.Test supported)</h2></p> \
+                                     <code><textarea id="testCaseCode" class="testCaseCode">{}</textarea></code></div>',
 
         RESPONSE_TEMPLATE_PLAIN: '<div class="tabcontent"><pre><code id="plainResponse" class= "responsecontent"></code></pre></div>',
 
@@ -74,7 +77,7 @@
                     content: this.RESPONSE_TEMPLATE_PLAIN
                 }, {
                     label: 'Testprotocol',
-                    content: '<textarea class="responsecontent"></textarea>'
+                    content: '<div class="tabcontent"><pre><code id="testCaseConsole" class= "responsecontent"></code></pre></div>'
                 }]
             });
             this.tabviewResponse.render();
@@ -149,9 +152,10 @@
             data.url = this.get('url');
             data.method = this.get('method');
             data.postcontent = this.get('postcontent');
+            // This has to be changed to get data from a local testcases array
             data.testcases = [{
                 parameters : this.testParameters.get('pairs'),
-                testunits  : []                
+                testCaseCode  : this._display.one('#testCaseCode').get('value')
             }];
             return data;
         },
@@ -181,6 +185,7 @@
             if (!Y.Lang.isUndefined(this.currentcase)) {
                 this.testParameters.set('pairs', this.currentcase.parameters);
             }
+            this._display.one('#testCaseCode').set('value', this.currentcase.testCaseCode);
         },
 
         _doRequest: function() {
@@ -211,6 +216,11 @@
                     success: function(id, o, args) {
                         Y.log('SUCCESS');
                         context._display.one('#plainResponse').setContent(o.responseText);
+                        var testcase = new Y.RT.TestcaseYUI({
+                                code: context.currentcase.testCaseCode,
+                                consoleContainer : context._display.one('#testCaseConsole')
+                            });
+                        testcase.run(o);
                     },
                     failure: function(id, a) {
                         Y.log("ERROR " + id + " " + a.statusText, "info", "Request");
@@ -221,7 +231,7 @@
                 }
             };
             var context = this;
-            var obj = Y.io(this.get('baseURL')+this.get('url'), cfg);
+            var obj = Y.io(this.get('project').get('serverURL')+this.get('url'), cfg);
         }
 
     }, {
@@ -249,13 +259,12 @@
                 value: [],
                 validator: Y.Lang.isArray
             },
-            baseURL: {
-                value: "",
-                validator: Y.Lang.isString
+            project: {
+                value: undefined
             }
         }
     });
 
 }, '0.1', {
-    requires: ['base', 'widget', 'io-xdr', 'tabview', 'rt_keyvalueeditor']
+    requires: ['base', 'widget', 'io-xdr', 'tabview', 'rt_keyvalueeditor', 'rt_testcase_yui']
 });

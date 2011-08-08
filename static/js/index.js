@@ -5,13 +5,17 @@
 
 YUI({
     modules: {
+        'rt_testcase_yui': {
+            fullpath: '/js/rt_testcase_yui.js',
+            requires : ['base', 'json', 'console', 'test']
+        },
         'rt_keyvalueeditor': {
             fullpath: '/js/rt_keyvalueeditor.js',
             requires : ['base', 'widget']
         },
         'rt_service': {
             fullpath: '/js/rt_service.js',
-            requires : ['base', 'widget', 'io-xdr', 'tabview', 'rt_keyvalueeditor']
+            requires : ['base', 'widget', 'io-xdr', 'tabview', 'rt_keyvalueeditor', 'rt_testcase_yui']
         },
         'rt_project': {
             fullpath: '/js/rt_project.js',

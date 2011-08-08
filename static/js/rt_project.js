@@ -102,7 +102,7 @@ YUI.add('rt_project', function (Y) {
 
         _addService: function (service) {
             var myService = new Y.RT.Service(service);
-            myService.set('baseURL', this.get('serverURL'))
+            myService.set('project', this);
             myService.render('#services');
             this._services.push(myService);
         }
