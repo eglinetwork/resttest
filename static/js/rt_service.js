@@ -1,35 +1,35 @@
-YUI.add('rt_service', function(Y) {
+ YUI.add('rt_service', function(Y) {
 
     Y.namespace('RT').Service = Y.Base.create('service', Y.Widget, [], {
         DISPLAY_TEMPLATE: '<section> \
                             <header> \
-                                <h2 id="name">Service name <input type="text" id="servicename"></h2> \
-                                <nav id="servicenav"  class="subnavright"><ul><li>Edit</li><li>Minimize</li></ul></nav> \
-                                <label>Description:</label><br> \
-                                <textarea class="servicedescription" id="description">Write a short description the service here... </textarea> \
+                            <h2 id="name">Service name <input type="text" id="servicename"></h2> \
+                            <nav id="servicenav" class="subnavright"><ul><li>Edit</li><li>Minimize</li></ul></nav> \
+                            <label>Description:</label><br> \
+                            <textarea class="servicedescription" id="description">Write a short description the service here... </textarea> \
                             </header> \
                             <section class="request"> \
-                                <div id="requesttab"> \
-                                </div> \
+                            <div id="requesttab"> \
+                            </div> \
                             </section> \
                             <section class="response"> \
-                                <div id="responsetab"> \
-                                </div> \
+                            <div id="responsetab"> \
+                            </div> \
                             </section> \
                             </section>',
 
         REQUEST_TEMPLATE_SPEC: '<div class="tabcontent"><p><label>Method</label><select id="method"><option>GET</option><option>POST</option></select> \
-                                    </p> \
+                                </p> \
                                 <p><label>Service URL</label><input type="text" id="url" class="serviceurl"></p> \
                                 <div id="content"> \
-                                    <textarea class="postcontent" id="postcontent"></textarea> \
+                                <textarea class="postcontent" id="postcontent"></textarea> \
                                 </div></div>',
 
         REQUEST_TEMPLATE_TESTCASES: '<div class="tabcontent"><p><button id="request" class="request">Request</button></p> \
-                                     <p><h2>Request parameters for this test</h2></p> \
-                                     <div id="testparameters"></div> \
-                                     <p><h2>Testunits</h2></p> \
-                                     <div id="testunits"></div></div>',
+                                        <p><h2>Request parameters for this test</h2></p> \
+                                        <div id="testparameters"></div> \
+                                        <p><h2>Test Code (currently only Y.Test supported)</h2></p> \
+                                         <code><textarea id="testCaseCode" class="testCaseCode">{}</textarea></code></div>',
 
         RESPONSE_TEMPLATE_PLAIN: '<div class="tabcontent"><pre><code id="plainResponse" class= "responsecontent"></code></pre></div>',
 
@@ -77,10 +77,7 @@ YUI.add('rt_service', function(Y) {
                     content: '<textarea class="responsecontent"></textarea>'
                 }]
             });
-
-            
             this.tabviewResponse.render();
-            
             
         },
 
@@ -187,6 +184,7 @@ YUI.add('rt_service', function(Y) {
         },
 
         _doRequest: function() {
+            this._display.one('#plainResponse').setContent("");
             var xdrConfig = {
                 id: 'flash',
                 src: 'js/io.swf'

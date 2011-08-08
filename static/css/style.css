@@ -124,6 +124,7 @@ h1 {
 }
 
 h2 {
+    margin-top:  0.5em;
     margin-bottom:  0.5em;
 }
 
@@ -191,6 +192,11 @@ h2 {
 
 #project section section .postcontent {
     margin-top: 10px;
+    width: 430px;
+    height: 200px;
+}
+
+#project section section .testCaseCode {
     width: 430px;
     height: 200px;
 }
