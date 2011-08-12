@@ -23,7 +23,7 @@ YUI({
         },
         'rt_datamanager': {
             fullpath: '/js/rt_datamanager.js',
-            requires : ['base', 'io', 'gallery-storage-lite']
+            requires : ['base', 'io', 'gallery-storage-lite', 'json', 'overlay']
         }
     }
 }).use('base','node','json', 'rt_service', 'rt_project', 'rt_datamanager', function(Y) {

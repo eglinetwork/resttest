@@ -19,7 +19,7 @@
 
         <script src="js/libs/modernizr-1.7.min.js"></script>
     </head>
-    <body>
+    <body>        
         <div id="container">
             <header id="topheader">
                 <nav id="topnav">Change Project | About | ELSTR</nav>
@@ -33,27 +33,34 @@
                     </ul>
                 </nav>
             </header>
+            <div id="topspace"></div>
             <div id="status"></div>
 
             <div id="project" role="main">
-                <section>
-                    <h2>General Specification</h2>
-                    <nav id="generalnav"  class="subnavright">
-                        <ul>
-                            <li id="saveProject">Save local</li>
-                            <li id="exportProject">Export</li>
-                            <li id="importProject">Import</li>
-                            <li>New Version</li>
-                            <li>History</li>
-                        </ul>
-                    </nav>
-                    Name
-                    <input id="name" type="text" />
-                    Server URL
-                    <input id="serverURL"type="text" />
-                    Description
-                    <input id="description" type="text" />
+                
+                <section id="project_header">
+                    <div>
+                        <h2>General Specification</h2>
+                        <nav id="generalnav"  class="subnavright">
+                            <ul>
+                                <li id="saveProject">Save local</li>
+                                <li id="exportProject">Export</li>
+                                <li id="importProject">Import</li>
+                                <li>New Version</li>
+                                <li>History</li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div>
+                        Name
+                        <input id="name" type="text" />
+                        Server URL
+                        <input id="serverURL"type="text" />
+                        Description
+                        <input id="description" type="text" />
+                    </div>
                 </section>
+                <div id = "project_topspace"></div>
                 <div id="services">
                 </div>
                 <button id ="addService">Add new Service</button>
@@ -62,11 +69,15 @@
             <footer>
                 Cerated by Intelliact AG
             </footer>
+            <div id = "importexport"></div
         </div>
 
-        <script src="//yui.yahooapis.com/3.3.0/build/yui/yui-min.js"></script>
+        <script src="http://yui.yahooapis.com/3.3.0/build/yui/yui-min.js"></script>
         <script src="/js/index.js"></script>
-
+        <script src="/js/libs/ace/build/src/ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="/js/libs/ace/build/src/theme-twilight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="/js/libs/ace/build/src/mode-javascript.js" type="text/javascript" charset="utf-8"></script>
+        
     <link rel="stylesheet" type="text/css" href="//yui.yahooapis.com/combo?3.3.0/build/cssfonts/fonts-min.css&3.3.0/build/cssreset/reset-min.css&3.3.0/build/cssgrids/grids-min.css&3.3.0/build/cssbase/base-min.css">
     <link rel="stylesheet" href="css/style.css?v=2">
     <!--[if lt IE 7 ]>

@@ -4,7 +4,7 @@
         DISPLAY_TEMPLATE: '<section> \
                             <header> \
                             <h2 id="name">Service name <input type="text" id="servicename"></h2> \
-                            <nav id="servicenav" class="subnavright"><ul><li>Edit</li><li>Minimize</li></ul></nav> \
+                            <!-- <nav id="servicenav" class="subnavright"><ul><li>Edit</li><li>Minimize</li></ul></nav> -->\
                             <label>Description:</label><br> \
                             <textarea class="servicedescription" id="description">Write a short description the service here... </textarea> \
                             </header> \
@@ -32,7 +32,7 @@
                                      <p><h2>Request parameters for this test</h2></p> \
                                      <div id="testparameters"></div> \
                                      <p><h2>Test Code (currently only Y.Test supported)</h2></p> \
-                                     <code><textarea id="testCaseCode" class="testCaseCode">{}</textarea></code></div>',
+                                     <code><div id="testCaseCode_{id}" class="testCaseCode">{}</div></code></div>',
 
         RESPONSE_TEMPLATE_PLAIN: '<div class="tabcontent"><pre><code id="plainResponse" class= "responsecontent"></code></pre></div>',
 
@@ -50,7 +50,7 @@
             var node = Y.Node.create(this.DISPLAY_TEMPLATE);
             content.append(node);
             this._display = node;
-
+            var request_template_testcases =  this.REQUEST_TEMPLATE_TESTCASES.replace('{id}', this.get('id'));
             this.tabviewRequest = new Y.TabView({
                 srcNode: this._display.one('#requesttab'),
                 children: [{
@@ -58,7 +58,7 @@
                     content: this.REQUEST_TEMPLATE_SPEC
                 }, {
                     label: 'Testcases',
-                    content: this.REQUEST_TEMPLATE_TESTCASES
+                    content: request_template_testcases
                 }]
             });
             this.tabviewRequest.render();
@@ -68,7 +68,12 @@
                 valueText : 'Testvalue',
                 pairs :[]    
             });
-            this.testParameters.render(this._display.one('#testparameters'));
+            this.testParameters.render(this._display.one('#testparameters'));            
+            
+            this.testCaseCodeEditor = ace.edit('testCaseCode_' + this.get('id'));
+            this.testCaseCodeEditor.setTheme("ace/theme/twilight");
+            var JavaScriptMode = require("ace/mode/javascript").Mode;
+            this.testCaseCodeEditor.getSession().setMode(new JavaScriptMode());
 
             this.tabviewResponse = new Y.TabView({
                 srcNode: this._display.one('#responsetab'),
@@ -184,8 +189,10 @@
             this.currentcase = value[0];
             if (!Y.Lang.isUndefined(this.currentcase)) {
                 this.testParameters.set('pairs', this.currentcase.parameters);
+                this.testCaseCodeEditor.getSession().setValue(this.currentcase.testCaseCode);
+                //this._display.one('#testCaseCode_'+this.get('id')).set('value', this.currentcase.testCaseCode);
             }
-            this._display.one('#testCaseCode').set('value', this.currentcase.testCaseCode);
+            
         },
 
         _doRequest: function() {
@@ -236,6 +243,9 @@
 
     }, {
         ATTRS: {
+            id :  {
+                value: ""
+            },            
             name: {
                 value: "",
                 validator: Y.Lang.isString

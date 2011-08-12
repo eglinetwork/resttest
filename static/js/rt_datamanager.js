@@ -29,6 +29,38 @@ YUI.add('rt_datamanager', function (Y) {
         saveProject: function (pid, data) {
             Y.StorageLite.setItem(pid, data, true);
         },
+        
+          exportProject: function (data) {
+            var dataString = Y.JSON.stringify(data);
+            var overlay = new Y.Overlay({
+                bodyContent: '<h2>Export JSON Data</h2><div class="exportimportbox"><textarea>'+dataString+'</textarea>' +
+                             '<button id="expclose">Close</button></div>',
+                centered : true
+                
+            });
+            overlay.render('#importexport');
+            Y.one('#importexport').one('#expclose').on('click', function(){
+                overlay.hide();
+                overlay.destroy();
+            }, this);
+        },
+        
+        
+        importProject: function (project) {
+            var overlay = new Y.Overlay({
+                bodyContent: '<h2>Import JSON Data</h2><div class="exportimportbox"><textarea id="importcontent"></textarea>' +
+                             '<button id="import">Import</button></div>',
+                centered : true
+                
+            });
+            overlay.render('#importexport');
+            Y.one('#importexport').one('#import').on('click', function(){
+                overlay.hide();
+                var data = Y.JSON.parse( Y.one('#importexport').one('#importcontent').get('value'));
+                project.loadDataObject(data);
+            }, this);
+            
+        },
 
         saveSomeData: function (pid) {
              var data = {
@@ -62,7 +94,7 @@ YUI.add('rt_datamanager', function (Y) {
     })
 
 }, '0.1', {
-    requires : ['base', 'io']
+    requires : ['base', 'io', 'json']
 });
 
 

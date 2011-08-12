@@ -1,7 +1,6 @@
-
 /* ==== Scroll down to find where to put your styles :) ==== */
 
-/*  HTML5 ✰ Boilerplate  */
+/* HTML5 ✰ Boilerplate */
 
 html, body, div, span, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -36,7 +35,7 @@ table { border-collapse: collapse; border-spacing: 0; }
 hr { display: block; height: 1px; border: 0; border-top: 1px solid #ccc; margin: 1em 0; padding: 0; }
 input, select { vertical-align: middle; }
 
-body { font:13px/1.231 sans-serif; *font-size:small; } 
+body { font:13px/1.231 sans-serif; *font-size:small; }
 select, input, textarea, button { font:99% sans-serif; }
 pre, code, kbd, samp { font-family: monospace, sans-serif; }
 
@@ -55,14 +54,14 @@ sub { bottom: -0.25em; }
 
 pre { white-space: pre; white-space: pre-wrap; word-wrap: break-word; padding: 15px; }
 textarea { overflow: auto; }
-.ie6 legend, .ie7 legend { margin-left: -7px; } 
+.ie6 legend, .ie7 legend { margin-left: -7px; }
 input[type="radio"] { vertical-align: text-bottom; }
 input[type="checkbox"] { vertical-align: bottom; }
 .ie7 input[type="checkbox"] { vertical-align: baseline; }
 .ie6 input { vertical-align: text-bottom; }
 label, input[type="button"], input[type="submit"], input[type="image"], button { cursor: pointer; }
 button, input, select, textarea { margin: 0; }
-input:valid, textarea:valid   {  }
+input:valid, textarea:valid { }
 input:invalid, textarea:invalid { border-radius: 1px; -moz-box-shadow: 0px 0px 5px red; -webkit-box-shadow: 0px 0px 5px red; box-shadow: 0px 0px 5px red; }
 .no-boxshadow input:invalid, .no-boxshadow textarea:invalid { background-color: #f0dddd; }
 
@@ -70,14 +69,13 @@ input:invalid, textarea:invalid { border-radius: 1px; -moz-box-shadow: 0px 0px 5
 ::selection { background:#FF5E99; color:#fff; text-shadow: none; }
 a:link { -webkit-tap-highlight-color: #FF5E99; }
 
-button {  width: auto; overflow: visible; }
+button { width: auto; overflow: visible; }
 .ie7 img { -ms-interpolation-mode: bicubic; }
 
-body, select, input, textarea {  color: #444; }
+body, select, input, textarea { color: #444; }
 h1, h2, h3, h4, h5, h6 { font-weight: bold; }
 a, a:active, a:visited { color: #607890; }
 a:hover { color: #036; }
-
 /*
     // ========================================== \\
    ||                                              ||
@@ -90,11 +88,23 @@ a:hover { color: #036; }
 * Pink Shades: B70094    892276	770060	DB37BC	DB62C4
 * Green Shades: BDF400	98B72E	7B9E00	CFF93E	DBF970
 */
+
+
+h1 {
+    font-size: 20pt;
+    margin-top: 0.5em;
+    margin-bottom:  0.5em;
+}
+
+h2 {
+    margin-top:  0.5em;
+    margin-bottom:  0.5em;
+}
+
 #container {
     width:1000px;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 10px;
 }
 
 #topheader {
@@ -115,29 +125,46 @@ a:hover { color: #036; }
     #892276 57%);
     text-shadow: 1px 1px 4px #333333;
     height: 100px;
+    position: fixed;
+    width: 980px;
+    z-index: 1000;
 }
 
-h1 {
-    font-size: 20pt;
-    margin-top: 0.5em;
-    margin-bottom:  0.5em;
+#topspace {
+    height: 130px;    
 }
 
-h2 {
-    margin-top:  0.5em;
-    margin-bottom:  0.5em;
+#status {
+    background-color: #CCFFFF;
+    height: 20px;
+    padding: 5px;
+    position: fixed;
+    top: 115px;
+    width: 990px;
+    z-index: 990;
+}
+
+#project_header{
+    position: fixed;
+    width: 980px;
+    z-index: 1000;
+}
+
+#project_topspace {
+    height: 80px;    
 }
 
 #project section {
+    background-color: #EEEEEE;
+    border-radius: 10px 10px 10px 10px;
     margin-bottom: 10px;
     margin-top: 10px;
-    border-radius: 10px;
-    background-color: #eeeeee;
+    overflow: hidden;
     padding: 10px;
-    overflow:hidden;
 }
 
 #project section header {
+    margin-bottom: 10px;
     background: none;
 }
 
@@ -171,7 +198,7 @@ h2 {
     padding:5px;
     background: none repeat scroll 0 0 #eeeeee;
     box-shadow: inset 1px 1px 2px #111111;
-    
+    height: 500px;
 }
 
 #project section section label {
@@ -199,7 +226,7 @@ h2 {
 
 #project section section .testCaseCode {
     width: 430px;
-    height: 200px;
+    height: 350px;;
     font-family: monospace,sans-serif;
 }
 
@@ -213,9 +240,13 @@ h2 {
    float: right;
 }
 
-.subnavright {
-   float: right;
+#generalnav {
+    position: relative;
+    top: -30px;
+}
 
+.subnavright {
+   float: right;    
 }
 
 .subnavright li:hover {
@@ -248,6 +279,18 @@ footer {
 }
 
 
+.exportimportbox {
+    background-color : #ffffff;
+    box-shadow:  2px 2px 2px #111111;
+    padding: 10px;
+    width: 600px;
+    height: 400px;
+}
+
+.exportimportbox textarea{
+    height: 380px;
+    width: 600px;
+}
 
 
 /* END OF MY STYLES */
