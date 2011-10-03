@@ -21,8 +21,8 @@
         REQUEST_TEMPLATE_SPEC: '<div class="tabcontent"><p><label>Method</label><select id="method"><option>GET</option><option>POST</option></select> \
                                 </p> \
                                 <p><label>Service URL</label><input type="text" id="url" class="serviceurl"></p> \
-                                <div id="content"> \
-                                <textarea class="postcontent" id="postcontent"></textarea> \
+                                <div id="content"><pre class="prettyprint"> \
+                                <textarea class="postcontent" id="postcontent"></textarea></pre> \
                                 </div></div>',
 
         REQUEST_TEMPLATE_TESTCASES: '<div class="tabcontent"><p> \
@@ -33,8 +33,17 @@
                                      <div id="testparameters"></div> \
                                      <p><h2>Test Code (currently only Y.Test supported)</h2></p> \
                                      <code><div id="testCaseCode_{id}" class="testCaseCode">{}</div></code></div>',
+                                     
+        REQUEST_TEMPLATE_TESTCASES_2: '<div class="tabcontent"><p> \
+                                     <select><option>Example</option></select> \
+                                     <button id="addTestCase" class="request">Add</button> \
+                                     <button id="request" class="request">Request</button></p> \
+                                     <p><h2>Request parameters for this test</h2></p> \
+                                     <div id="testparameters"></div> \
+                                     <p><h2>Test Code (currently only Y.Test supported)</h2></p> \
+                                     <code><pre id="testCaseCode_{id}" class="prettyprint">{}</pre></code></div>',                            
 
-        RESPONSE_TEMPLATE_PLAIN: '<div class="tabcontent"><pre><code id="plainResponse" class= "responsecontent"></code></pre></div>',
+        RESPONSE_TEMPLATE_PLAIN: '<div class="tabcontent"><pre id="plainResponse" class="responsecontent prettyprint"></pre></div>',
 
         initializer: function() {
 
@@ -50,7 +59,7 @@
             var node = Y.Node.create(this.DISPLAY_TEMPLATE);
             content.append(node);
             this._display = node;
-            var request_template_testcases =  this.REQUEST_TEMPLATE_TESTCASES.replace('{id}', this.get('id'));
+            var request_template_testcases =  this.REQUEST_TEMPLATE_TESTCASES_2.replace('{id}', this.get('id'));
             this.tabviewRequest = new Y.TabView({
                 srcNode: this._display.one('#requesttab'),
                 children: [{
@@ -70,10 +79,10 @@
             });
             this.testParameters.render(this._display.one('#testparameters'));            
             
-            this.testCaseCodeEditor = ace.edit('testCaseCode_' + this.get('id'));
-            this.testCaseCodeEditor.setTheme("ace/theme/twilight");
-            var JavaScriptMode = require("ace/mode/javascript").Mode;
-            this.testCaseCodeEditor.getSession().setMode(new JavaScriptMode());
+            //this.testCaseCodeEditor = ace.edit('testCaseCode_' + this.get('id'));
+            ///this.testCaseCodeEditor.setTheme("ace/theme/twilight");
+            //var JavaScriptMode = require("ace/mode/javascript").Mode;
+            //this.testCaseCodeEditor.getSession().setMode(new JavaScriptMode());
 
             this.tabviewResponse = new Y.TabView({
                 srcNode: this._display.one('#responsetab'),
@@ -160,7 +169,8 @@
             // This has to be changed to get data from a local testcases array
             data.testcases = [{
                 parameters : this.testParameters.get('pairs'),
-                testCaseCode  : this._display.one('#testCaseCode').get('value')
+                testCaseCode: this.testCaseCodeEditor.getSession().getValue()
+                //testCaseCode  : this._display.one('#testCaseCode').get('value')
             }];
             return data;
         },
@@ -186,11 +196,15 @@
         },  
 
         _updateTestcasesUI: function(value) {
-            this.currentcase = value[0];
+            if (Y.Lang.isUndefined(this.currentcase)) { 
+                this.currentcase = value[0];
+            }
             if (!Y.Lang.isUndefined(this.currentcase)) {
                 this.testParameters.set('pairs', this.currentcase.parameters);
-                this.testCaseCodeEditor.getSession().setValue(this.currentcase.testCaseCode);
+                this._display.one('#testCaseCode_'+this.get('id')).setContent(this.currentcase.testCaseCode);
+                //this.testCaseCodeEditor.getSession().setValue(this.currentcase.testCaseCode);
                 //this._display.one('#testCaseCode_'+this.get('id')).set('value', this.currentcase.testCaseCode);
+                Y.prettyPrint();
             }
             
         },
@@ -223,6 +237,7 @@
                     success: function(id, o, args) {
                         Y.log('SUCCESS');
                         context._display.one('#plainResponse').setContent(o.responseText);
+                        Y.prettyPrint();
                         var testcase = new Y.RT.TestcaseYUI({
                                 code: context.currentcase.testCaseCode,
                                 consoleContainer : context._display.one('#testCaseConsole')
@@ -276,5 +291,5 @@
     });
 
 }, '0.1', {
-    requires: ['base', 'widget', 'io-xdr', 'tabview', 'rt_keyvalueeditor', 'rt_testcase_yui']
+    requires: ['base', 'widget', 'io-xdr','gallery-prettify', 'tabview', 'rt_keyvalueeditor', 'rt_testcase_yui']
 });

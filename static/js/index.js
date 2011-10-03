@@ -5,6 +5,18 @@
 
 YUI({
     modules: {
+        'gallery-prettify': {
+            fullpath: 'http://derek.github.com/sandbox/yui/gallery-prettify/gallery-prettify.js'
+        },
+        'ext_ace': {
+             fullpath: '/js/libs/ace/build/src/ace.js'
+        },
+        'ext_ace_theme': {
+             fullpath: '/js/libs/ace/build/src/theme-twilight.js'
+        },
+        'ext_ace_mode': {
+             fullpath: '/js/libs/ace/build/src/mode-javascript.js'
+        },
         'rt_testcase_yui': {
             fullpath: '/js/rt_testcase_yui.js',
             requires : ['base', 'json', 'console', 'test']
@@ -15,7 +27,7 @@ YUI({
         },
         'rt_service': {
             fullpath: '/js/rt_service.js',
-            requires : ['base', 'widget', 'io-xdr', 'tabview', 'rt_keyvalueeditor', 'rt_testcase_yui']
+            requires : ['base', 'widget', 'io-xdr', 'tabview', 'gallery-prettify', 'rt_keyvalueeditor', 'rt_testcase_yui', 'ext_ace', 'ext_ace_theme', 'ext_ace_mode']
         },
         'rt_project': {
             fullpath: '/js/rt_project.js',
@@ -25,6 +37,7 @@ YUI({
             fullpath: '/js/rt_datamanager.js',
             requires : ['base', 'io', 'gallery-storage-lite', 'json', 'overlay']
         }
+        
     }
 }).use('base','node','json', 'rt_service', 'rt_project', 'rt_datamanager', function(Y) {
     function main() {
