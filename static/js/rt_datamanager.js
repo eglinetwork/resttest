@@ -30,15 +30,17 @@ YUI.add('rt_datamanager', function (Y) {
             Y.StorageLite.setItem(pid, data, true);
         },
         
-          exportProject: function (data) {
+        exportProject: function (data) {
             var dataString = Y.JSON.stringify(data);
+            var json_formated = js_beautify(dataString);
             var overlay = new Y.Overlay({
-                bodyContent: '<h2>Export JSON Data</h2><div class="exportimportbox"><textarea>'+dataString+'</textarea>' +
+                bodyContent: '<h2>Export JSON Data</h2><div class="overlay exportimportbox"><textarea id="exportcontent"></textarea>' +
                              '<button id="expclose">Close</button></div>',
                 centered : true
                 
             });
             overlay.render('#importexport');
+            Y.one('#exportcontent').set('value', json_formated);
             Y.one('#importexport').one('#expclose').on('click', function(){
                 overlay.hide();
                 overlay.destroy();
@@ -48,8 +50,9 @@ YUI.add('rt_datamanager', function (Y) {
         
         importProject: function (project) {
             var overlay = new Y.Overlay({
-                bodyContent: '<h2>Import JSON Data</h2><div class="exportimportbox"><textarea id="importcontent"></textarea>' +
-                             '<button id="import">Import</button></div>',
+                bodyContent: '<h2>Import JSON Data</h2><div class="overlay exportimportbox"><textarea id="importcontent"></textarea>' +
+                             '<button id="import">Import</button></div>' +
+                             '<button id="cancel">Cancel</button></div>',
                 centered : true
                 
             });
@@ -58,6 +61,9 @@ YUI.add('rt_datamanager', function (Y) {
                 overlay.hide();
                 var data = Y.JSON.parse( Y.one('#importexport').one('#importcontent').get('value'));
                 project.loadDataObject(data);
+            }, this);
+            Y.one('#importexport').one('#cancel').on('click', function(){
+                overlay.hide();
             }, this);
             
         },

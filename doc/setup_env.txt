@@ -7,3 +7,4 @@ An example can be found in this directory.
 
 2.) Upload a seedfile to the server
 
+This is not yet Implemented

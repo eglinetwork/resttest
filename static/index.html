@@ -27,22 +27,28 @@
                 <p>a tool to write proper specs and prove they work</p>
                 <nav id="projectnav" class="subnavright">
                     <ul>
-                        <li>Project Description</li>
-                        <li>Specification</li>
-                        <li>Integration Tests</li>
+                        <li id="nav_descrioption" class="projectnav">Project Description</li>
+                        <li id="nav_project" class="projectnav">Specification</li>
+                        <li id="nav_integration" class="projectnav">Integration Tests</li>
                     </ul>
                 </nav>
             </header>
             <div id="topspace"></div>
-            <div id="status"></div>
-
-            <div id="project" role="main">
+            <div id="status"><button id="savecode" class="hide">Done</button><div id="codeeditor" style="height: 250px; width: 990px;"></div></div>
+            <div id="descrioption" role="main" class="hide">
+                Description COMES THE TEST
+            </div>
+            <div id="integration" role="main" class="hide">
+                Integration HERE COMES THE TEST
+            </div>
+            <div id="project" role="main" class="hide">
                 
                 <section id="project_header">
                     <div>
                         <h2>General Specification</h2>
                         <nav id="generalnav"  class="subnavright">
                             <ul>
+                                <li id="selectMode"><select><option>Edit</option><option>Test</option><option>Read</option></select></li>
                                 <li id="saveProject">Save local</li>
                                 <li id="exportProject">Export</li>
                                 <li id="importProject">Import</li>
@@ -72,10 +78,10 @@
             <div id = "importexport"></div
         </div>
 
-        <script src="http://yui.yahooapis.com/3.3.0/build/yui/yui-min.js"></script>
+        <script src="http://yui.yahooapis.com/3.4.1/build/yui/yui-min.js"></script>
         <script src="/js/index.js"></script>               
         
-    <link rel="stylesheet" type="text/css" href="//yui.yahooapis.com/combo?3.3.0/build/cssfonts/fonts-min.css&3.3.0/build/cssreset/reset-min.css&3.3.0/build/cssgrids/grids-min.css&3.3.0/build/cssbase/base-min.css">
+    <link rel="stylesheet" type="text/css" href="//yui.yahooapis.com/combo?3.4.1/build/cssfonts/fonts-min.css&3.4.1/build/cssreset/reset-min.css&3.4.1/build/cssgrids/grids-min.css&3.4.1/build/cssbase/base-min.css">
     <link rel="stylesheet" href="css/style.css?v=2">
     <link type="text/css" rel="stylesheet" href="http://derek.github.com/sandbox/yui/gallery-prettify/gallery-prettify.css">
     <!--[if lt IE 7 ]>
