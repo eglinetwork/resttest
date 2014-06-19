@@ -1,7 +1,6 @@
-
 /* ==== Scroll down to find where to put your styles :) ==== */
 
-/*  HTML5 ✰ Boilerplate  */
+/* HTML5 ✰ Boilerplate */
 
 html, body, div, span, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -36,7 +35,7 @@ table { border-collapse: collapse; border-spacing: 0; }
 hr { display: block; height: 1px; border: 0; border-top: 1px solid #ccc; margin: 1em 0; padding: 0; }
 input, select { vertical-align: middle; }
 
-body { font:13px/1.231 sans-serif; *font-size:small; } 
+body { font:13px/1.231 sans-serif; *font-size:small; }
 select, input, textarea, button { font:99% sans-serif; }
 pre, code, kbd, samp { font-family: monospace, sans-serif; }
 
@@ -55,14 +54,14 @@ sub { bottom: -0.25em; }
 
 pre { white-space: pre; white-space: pre-wrap; word-wrap: break-word; padding: 15px; }
 textarea { overflow: auto; }
-.ie6 legend, .ie7 legend { margin-left: -7px; } 
+.ie6 legend, .ie7 legend { margin-left: -7px; }
 input[type="radio"] { vertical-align: text-bottom; }
 input[type="checkbox"] { vertical-align: bottom; }
 .ie7 input[type="checkbox"] { vertical-align: baseline; }
 .ie6 input { vertical-align: text-bottom; }
 label, input[type="button"], input[type="submit"], input[type="image"], button { cursor: pointer; }
 button, input, select, textarea { margin: 0; }
-input:valid, textarea:valid   {  }
+input:valid, textarea:valid { }
 input:invalid, textarea:invalid { border-radius: 1px; -moz-box-shadow: 0px 0px 5px red; -webkit-box-shadow: 0px 0px 5px red; box-shadow: 0px 0px 5px red; }
 .no-boxshadow input:invalid, .no-boxshadow textarea:invalid { background-color: #f0dddd; }
 
@@ -70,14 +69,13 @@ input:invalid, textarea:invalid { border-radius: 1px; -moz-box-shadow: 0px 0px 5
 ::selection { background:#FF5E99; color:#fff; text-shadow: none; }
 a:link { -webkit-tap-highlight-color: #FF5E99; }
 
-button {  width: auto; overflow: visible; }
+button { width: auto; overflow: visible; }
 .ie7 img { -ms-interpolation-mode: bicubic; }
 
-body, select, input, textarea {  color: #444; }
+body, select, input, textarea { color: #444; }
 h1, h2, h3, h4, h5, h6 { font-weight: bold; }
 a, a:active, a:visited { color: #607890; }
 a:hover { color: #036; }
-
 /*
     // ========================================== \\
    ||                                              ||
@@ -87,21 +85,35 @@ a:hover { color: #036; }
 */
 
 /* Colorscheme:
-* Pink Shades: B70094	892276	770060	DB37BC	DB62C4
+* Pink Shades: B70094    892276	770060	DB37BC	DB62C4
 * Green Shades: BDF400	98B72E	7B9E00	CFF93E	DBF970
 */
-#container {
-    width:1000px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 10px;
+
+
+h1 {
+    font-size: 20pt;
+    margin-top: 0.5em;
+    margin-bottom:  0.5em;
+}
+
+h2 {
+    margin-top:  0.5em;
+    margin-bottom:  0.5em;
+}
+
+#codeeditor {
+    display:none;    
+}
+
+#container {    
+    width:100%;
+    min-width:1000px;
 }
 
 #topheader {
     background-color: #770060;
     padding: 10px;
-    color: #ffffff;
-    border-radius: 10px;
+    color: #ffffff;    
     background-image: -webkit-gradient(
         linear,
         left bottom,
@@ -115,28 +127,45 @@ a:hover { color: #036; }
     #892276 57%);
     text-shadow: 1px 1px 4px #333333;
     height: 100px;
+    position: fixed;
+    z-index: 100;
+    width:99%;
 }
 
-h1 {
-    font-size: 20pt;
-    margin-top: 0.5em;
-    margin-bottom:  0.5em;
+#topspace {
+    height: 145px;    
 }
 
-h2 {
-    margin-bottom:  0.5em;
+#status {
+    background-color: #CCFFFF;
+    height: 20px;
+    padding: 5px;
+    position: fixed;
+    top: 115px;
+    width: 100%;
+    z-index: 99;
+}
+
+#project_header{
+    position: fixed;
+    width: 99%;
+    z-index: 100;
+    border-bottom: 2px solid #FFFFFF
+}
+
+#project_topspace {
+    height: 90px;    
 }
 
 #project section {
-    margin-bottom: 10px;
-    margin-top: 10px;
-    border-radius: 10px;
-    background-color: #eeeeee;
+    background-color: #EEEEEE;
+    margin-bottom: 20px;    
+    overflow: hidden;
     padding: 10px;
-    overflow:hidden;
 }
 
 #project section header {
+    margin-bottom: 10px;
     background: none;
 }
 
@@ -145,14 +174,32 @@ h2 {
 }
 
 #project section section {
+    border-radius: 10px 10px 10px 10px;
     background-color: #cccccc;
-    width:450px;
+    width:48%;
     float: left;
     margin-right: 10px;
 }
 
-#project section section header {
-    background: none;
+#project section section .yui3-tab {
+    background: none repeat scroll 0 0 #eeeeee;
+    border-radius: 5px;
+    margin: 0 5px 10px 0;
+    box-shadow: inset 0 0 1px #111111;
+    
+}
+
+#project section section .yui3-tab-selected {
+    background: none repeat scroll 0 0 #ffffff;
+    box-shadow: inset 1px 1px 2px #111111;
+
+}
+
+#project section section .tabcontent {
+    border-radius: 5px;
+    padding:5px;
+    background: none repeat scroll 0 0 #eeeeee;
+    box-shadow: inset 1px 1px 2px #111111;
 }
 
 #project section section label {
@@ -171,25 +218,36 @@ h2 {
     float:right;
 }
 
-
 #project section section .postcontent {
+    margin-top: 10px;
     width: 430px;
-    height: 200px;
+    /*height: 200px;*/
+    font-family: monospace,sans-serif;
 }
 
-#project section section .responsecontent {
+#project section section .testCaseCode {
     width: 430px;
-    height: 250px;
-    overflow: scroll;
+    /*height: 350px;*/
+    font-family: monospace,sans-serif;
 }
+
+
+#project section section .request button {
+    float:right;
+}
+
 
 #topnav {
    float: right;
 }
 
-.subnavright {
-   float: right;
+#generalnav {
+    position: relative;
+    top: -30px;
+}
 
+.subnavright {
+   float: right;    
 }
 
 .subnavright li:hover {
@@ -203,6 +261,12 @@ h2 {
     padding: 5px;
 }
 
+pre.prettyprint {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #888888;
+    padding: 2px;
+}
+
 
 #projectnav li {
     float: left;
@@ -212,17 +276,82 @@ h2 {
     background-color: #B70094;
 }
 
+.service h1 {
+    font-size: 16pt;
+}
+
+.service h2 {
+    background: none repeat scroll 0 0 #AAAAAA;
+    color: #FFFFFF;
+    margin-bottom: 0.5em;
+    margin-top: 1.5em;
+    padding: 2px;
+}
+
+.service p {
+    margin-top:5px;
+}
 
 footer {
     background-color: #892276;
     padding: 10px;
     color: #ffffff;
-    border-radius: 10px;
     text-shadow: 1px 1px 4px #333333;
 }
 
+.overlay {
+    border: 1px solid;
+    background-color : #ffffff;
+    box-shadow:  2px 2px 2px #111111;
+    padding: 10px;
+    overflow:scroll;
+    resize: none;
+}
+
+.exportimportbox {
+    width: 600px;
+    height: 400px;
+}
+
+.exportimportbox textarea{
+    height: 380px;
+    width: 600px;
+}
+
+.pass {
+    background-color : #00FF00;
+}
 
 
+.fail {
+    background-color : #FF0000;
+}
+
+.hide {
+    display: none;    
+}
+
+.show {
+    display: inline;    
+}
+
+.yui3-panel {
+    border: 1px solid #cccccc;
+    background-color : #ffffff;
+    box-shadow:  2px 2px 2px #111111;
+    padding:2px;
+    z-index: 100;
+    height:500px;
+}
+
+.yui3-panel .yui3-widget-hd {
+    margin: 5px;
+    font-weight: bold;    
+}
+
+.yui3-panel .yui3-widget-ft {
+    margin: 5px;  
+}
 
 /* END OF MY STYLES */
 

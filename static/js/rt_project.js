@@ -49,8 +49,9 @@ YUI.add('rt_project', function (Y) {
 
             // Buttons
             this._display.one('#saveProject').on('click', this._saveProject, this);
-            this._display.one('#addService').on('click', this._addService, this)
-
+            this._display.one('#addService').on('click', this._addService, this);
+            this._display.one('#exportProject').on('click', this._exportProject, this);
+            this._display.one('#importProject').on('click', this._importProject, this);
         },
 
         syncUI: function() {
@@ -63,10 +64,10 @@ YUI.add('rt_project', function (Y) {
             this.set('name', data.name);
             this.set('description', data.description);
             this.set('serverURL', data.serverURL);
-            
-            Y.Array.each (data.services, function(service) {
-                this._addService(service);
-            }, this);
+            for (var i=0; i < data.services.length; i++) {            
+                data.services[i].id = i;
+                this._addService(data.services[i]);
+            }
         },
 
         getDataObject: function() {
@@ -75,6 +76,7 @@ YUI.add('rt_project', function (Y) {
             data.description = this.get('description');
             data.serverURL = this.get('serverURL');
             data.services = [];
+            
             Y.Array.each (this._services, function(wdgService) {
                 data.services.push(wdgService.getDataObject());
             });
@@ -99,9 +101,19 @@ YUI.add('rt_project', function (Y) {
             this.get('dataManager').saveProject(this.get('id'), data);
             Y.one('#status').setContent('Project has been saved.');
         },
+        
+        _exportProject: function(){
+            var data = this.getDataObject();
+            this.get('dataManager').exportProject(data);
+        },
+
+        _importProject: function(){
+            this.get('dataManager').importProject(this);
+        },
 
         _addService: function (service) {
             var myService = new Y.RT.Service(service);
+            myService.set('project', this);
             myService.render('#services');
             this._services.push(myService);
         }
